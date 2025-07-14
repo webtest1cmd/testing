@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #14b1bb;
+        }
+        .instructions {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background-color: #14b1bb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background-color: #0e8a92;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nizmed ENT License System Test</h1>
+        
+        <div class="instructions">
+            <h2>Testing Instructions:</h2>
+            <p>This page is designed to test the license system functionality. You can try the following methods:</p>
+            <ol>
+                <li><strong>Type the secret key:</strong> Simply type "NIZMED2023" anywhere on this page.</li>
+                <li><strong>Use keyboard shortcut:</strong> Press Ctrl+Alt+L to trigger the license prompt.</li>
+                <li><strong>Click the test button:</strong> Use the button below to manually trigger the license prompt.</li>
+            </ol>
+        </div>
+        
+        <button class="test-button" id="testButton">Test License System</button>
+        
+        <div class="results" id="results" style="margin-top: 20px;">
+            <h2>Test Results:</h2>
+            <p>No tests run yet.</p>
+        </div>
+    </div>
+
+    <script src="js/license.js"></script>
+    <script>
+        // Add a button click handler to test the license system
+        document.getElementById('testButton').addEventListener('click', function() {
+            // Call the promptForSecretKey function if it's available
+            if (typeof promptForSecretKey === 'function') {
+                promptForSecretKey();
+                document.getElementById('results').innerHTML = '<h2>Test Results:</h2><p>Successfully called promptForSecretKey function.</p>';
+            } else {
+                // If the function isn't directly accessible (due to closure scope), simulate Ctrl+Alt+L
+                const ctrlEvent = new KeyboardEvent('keydown', {
+                    key: 'Control',
+                    code: 'ControlLeft',
+                    keyCode: 17,
+                    which: 17,
+                    bubbles: true
+                });
+                
+                const altEvent = new KeyboardEvent('keydown', {
+                    key: 'Alt',
+                    code: 'AltLeft',
+                    keyCode: 18,
+                    which: 18,
+                    bubbles: true
+                });
+                
+                const lEvent = new KeyboardEvent('keydown', {
+                    key: 'l',
+                    code: 'KeyL',
+                    keyCode: 76,
+                    which: 76,
+                    bubbles: true,
+                    ctrlKey: true,
+                    altKey: true
+                });
+                
+                document.dispatchEvent(ctrlEvent);
+                document.dispatchEvent(altEvent);
+                document.dispatchEvent(lEvent);
+                
+                document.getElementById('results').innerHTML = '<h2>Test Results:</h2><p>Simulated Ctrl+Alt+L keypress.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
